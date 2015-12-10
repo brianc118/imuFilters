@@ -1,4 +1,6 @@
 # *Madwick/Mahony Sensor fusion library*
+# style="color:red;">DEPRECIATED!</span> See the new *sensorfusion* library.
+
 for *Arduino 1.0.x.*
 
 If you have any questions, please do not hesitate to contact me.

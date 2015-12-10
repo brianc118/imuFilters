@@ -108,8 +108,8 @@ public:
             q2 += qDot2 * dt;
             q3 += qDot3 * dt;
             q4 += qDot4 * dt;
-            norm = sqrt(q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);    // normalise quaternion
-            norm = 1.0f/norm;
+            
+            norm = invSqrt(q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);    // normalise quaternion
             q[0] = q1 * norm;
             q[1] = q2 * norm;
             q[2] = q3 * norm;
@@ -203,8 +203,7 @@ public:
             q4 = pc + (q1 * gz + pa * gy - pb * gx) * (0.5f * dt);
 
             // Normalise quaternion
-            norm = sqrt(q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);
-            norm = 1.0f / norm;
+            norm = invSqrt(q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);
             q[0] = q1 * norm;
             q[1] = q2 * norm;
             q[2] = q3 * norm;
@@ -220,6 +219,17 @@ public:
             yaw   *= 180.0f / PI; 
             yaw   -= 13.8; // Declination
             roll  *= 180.0f / PI;
+      }
+private:
+      float invSqrt(float x)
+      {
+            float halfx = 0.5f * x;
+            float y = x;
+            long i = *(long*)&y;
+            i = 0x5f3759df - (i>>1);
+            y = *(float*)&i;
+            y = y * (1.5f - (halfx * y * y));
+            return y;
       }
 };
 
